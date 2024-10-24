@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{941a5994-02fc-4d8a-a430-5d82116b66c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Assets">
+      <UniqueIdentifier>{1db35a4f-660c-46bd-bcd2-4ad4a761ad51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\PNG">
+      <UniqueIdentifier>{f44bfc84-cfcb-4f40-b538-e3f3b7c81133}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\OneDrive\Documents\SLD2_forProject\tinyxml2-master\tinyxml2-master\tinyxml2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\OneDrive\Documents\SLD2_forProject\tinyxml2-master\tinyxml2-master\tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Castle_Blue.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\cliff.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\GoldMine_Active.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Foam.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\grassAndSand.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\House_Blue.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Little_Kingdom.tmx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tower_Blue.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tree.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Warrior_Blue.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Water.tsx">
+      <Filter>Resource Files\Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tilemap_Elevation.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tilemap_Flat.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Water\Foam\Foam.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Buildings\Castle\Castle_Blue.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Buildings\House\House_Blue.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Buildings\Tower\Tower_Blue.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Troops\Warrior\Blue\Warrior_Blue.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Water\Water.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Resources\Gold Mine\GoldMine_Active.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Resources\Trees\Tree.png">
+      <Filter>Resource Files\PNG</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

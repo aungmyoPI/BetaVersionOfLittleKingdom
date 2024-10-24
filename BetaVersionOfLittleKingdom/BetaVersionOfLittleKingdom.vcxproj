@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{d614e99a-bdc2-4be9-8a66-a7c5eccfd331}</ProjectGuid>
+    <RootNamespace>BetaVersionOfLittleKingdom</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\aungm\OneDrive\Documents\SLD2_forProject\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\include;C:\Users\aungm\OneDrive\Documents\SLD2_forProject\SDL2-2.30.8\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Assets\glm-master\glm;C:\Users\aungm\OneDrive\Documents\SLD2_forProject\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\lib\x64;C:\Users\aungm\OneDrive\Documents\SLD2_forProject\SDL2-2.30.8\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\OneDrive\Documents\SLD2_forProject\tinyxml2-master\tinyxml2-master\tinyxml2.cpp" />
+    <ClCompile Include="Game.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\OneDrive\Documents\SLD2_forProject\tinyxml2-master\tinyxml2-master\tinyxml2.h" />
+    <ClInclude Include="player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Castle_Blue.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\cliff.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Foam.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\GoldMine_Active.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\grassAndSand.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\House_Blue.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Little_Kingdom.tmx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tower_Blue.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tree.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Warrior_Blue.tsx" />
+    <None Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Water.tsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Buildings\Castle\Castle_Blue.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Buildings\House\House_Blue.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Buildings\Tower\Tower_Blue.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Factions\Knights\Troops\Warrior\Blue\Warrior_Blue.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Resources\Gold Mine\GoldMine_Active.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Resources\Trees\Tree.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tilemap_Elevation.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Ground\Tilemap_Flat.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Water\Foam\Foam.png" />
+    <Image Include="D:\Assets\Tiny Swords\Tiny Swords (Update 010)\Terrain\Water\Water.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
