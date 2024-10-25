@@ -14,6 +14,7 @@ private:
     const float FRAME_DURATION = 0.1f; // Duration of each frame in seconds (100 ms)
 
 public:
+
     SDL_Texture* playerSpriteSheetTexture;
     enum AnimationState {
         IDLE,
@@ -42,34 +43,11 @@ public:
         destRect.y = y;
         destRect.w = PLAYER_WIDTH;
         destRect.h = PLAYER_HEIGHT;
-
         SDL_RendererFlip flipType = flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
         SDL_RenderCopyEx(renderer, playerSpriteSheetTexture, &srcRect, &destRect, 0, NULL, flipType);
     }
 
-    void handlePlayerEvents(AnimationState& state, bool& flipRunning, int& currentFrame) {
-        SDL_Event event;
-
-        while (SDL_PollEvent(&event)) {  // Loop to handle all events in the queue
-            if (event.type == SDL_KEYDOWN) {
-                if (event.key.keysym.sym == SDLK_d) {
-                    state = RUNNING;
-                    flipRunning = false;
-                }
-                if (event.key.keysym.sym == SDLK_a) {
-                    state = RUNNING;
-                    flipRunning = true;
-                }
-            }
-            if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_a) {
-                    state = IDLE;
-                    currentFrame = 0; // Reset frame on idle
-                }
-            }
-        }
-    }
 
     void updatePlayerAnimationFrame(AnimationState state, int& currentFrame, float& timeSinceLastFrame, float deltaTime) {
         timeSinceLastFrame += deltaTime;
