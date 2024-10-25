@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include <tinyxml2.h>
 #include <sstream>
+#include <set>
 #include "player.h"
 
 using namespace tinyxml2;
@@ -13,6 +14,7 @@ const int TILE_SIZE = 64;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const int playerSpeed = 25;
+bool collision = false;
 
 struct Tileset {
     SDL_Texture* texture;
@@ -30,14 +32,6 @@ struct Camera {
     Camera(int width, int height) : x(0), y(0), width(width), height(height) {}
 };
 
-struct AnimatedTile {
-    int tileId; // The GID of the animated tile
-    std::vector<int> frames; // List of tile IDs for animation
-    int frameDuration; // Duration of each frame
-    float elapsedTime; // Time elapsed since last frame
-    long currentFrame; // Current frame to render
-};
-
 player Player;
 bool quit = false;
 bool flipRunning = false; // Flip state for running animation
@@ -50,8 +44,6 @@ void log(XMLElement* c) {
     std::cout << c << std::endl;
 }
 
-std::vector<AnimatedTile> animatedTiles; // List of animated tiles
-
 std::vector<Tileset> tilesets;
 
 SDL_Window* window = nullptr;
@@ -62,19 +54,14 @@ int init(const int& screenWidth, const int& screenHeight);
 void destroy();
 bool loadTMX(const std::string& filePath, std::vector<std::vector<std::vector<int>>>& tileMaps, int& mapWidth, int& mapHeight);
 bool loadTSX(const std::string& filePath, Tileset& tileset);
-void updateAnimations(float deltaTime);
 void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector<int>>>& tileMaps, const Camera& camera, float scale);
 
-void log(int num) {
-    std::cout << num << std::endl;
-}
 
 int main(int argc, char* argv[]) {
     if (init(SCREEN_WIDTH, SCREEN_HEIGHT) != 0) {
         return 1;
     }
 
-    Player.handlePlayerEvents(state, flipRunning, currentFrame);
 
     std::vector<std::vector<std::vector<int>>> tileMaps;
     int mapWidth = 0;
@@ -104,23 +91,31 @@ int main(int argc, char* argv[]) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
-            
-            if (e.type == SDL_KEYDOWN){
+
+            if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_w) {
-                    camera.y -= 12;
+                    if (!collision) {
+                        camera.y -= 12;
+                    }
                     state = player::RUNNING;
                 }
                 if (e.key.keysym.sym == SDLK_a) {
-                    camera.x -= 12;
+                    if (!collision) {
+                        camera.x -= 12;
+                    }
                     state = player::RUNNING;
                     flipRunning = true;
                 }
                 if (e.key.keysym.sym == SDLK_s) {
-                    camera.y += 12;
+                    if (!collision) {
+                        camera.y += 12;
+                    }
                     state = player::RUNNING;
                 }
                 if (e.key.keysym.sym == SDLK_d) {
-                    camera.x += 12;
+                    if (!collision) {
+                        camera.x += 12;
+                    }
                     state = player::RUNNING;
                     flipRunning = false;
                 }
@@ -132,14 +127,13 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
-        log(state);
+
         // Calculate deltaTime (time since the last frame)
         Uint32 currentTime = SDL_GetTicks();
         deltaTime = (currentTime - lastTime) / 1000.0f; // Convert milliseconds to seconds
         lastTime = currentTime;
 
         // Update animations with deltaTime
-        //updateAnimations(deltaTime);
         Player.updatePlayerAnimationFrame(state, currentFrame, timeSinceLastFrame, deltaTime);
 
         // Restrict camera movement to map bounds
@@ -161,10 +155,11 @@ int main(int argc, char* argv[]) {
         int windowHeight = 0;
         SDL_GetWindowSize(window, &windowWidth, &windowHeight);
         renderMap(renderer, tileMaps, camera, scale);
-        Player.renderPlayerAnimation(renderer, Player.playerSpriteSheetTexture,currentFrame, (state == player::IDLE) ? 0 : 1, windowWidth/2 - TILE_SIZE, windowHeight/2 - TILE_SIZE, flipRunning);
+        Player.renderPlayerAnimation(renderer, Player.playerSpriteSheetTexture, currentFrame, (state == player::IDLE) ? 0 : 1, windowWidth / 2 - TILE_SIZE, windowHeight / 2 - TILE_SIZE, flipRunning);
 
         // Present updated screen
         SDL_RenderPresent(renderer);
+
     }
 
     // Clean up and close SDL
@@ -294,56 +289,19 @@ bool loadTSX(const std::string& filePath, Tileset& tileset) {
             std::string actualImagePath = "D:/Assets/GameFiles/Images/" + std::string(imagePath);
             tileset.texture = IMG_LoadTexture(renderer, actualImagePath.c_str());
             if (!tileset.texture) {
-                return false; // Texture load failure
+                return false;
             }
             imageElement->QueryIntAttribute("width", &tileset.imageWidth);
             imageElement->QueryIntAttribute("height", &tileset.imageHeight);
         }
     }
 
-    // Load tile animations
-    for (XMLElement* tileElement = tilesetElement->FirstChildElement("tile"); tileElement; tileElement = tileElement->NextSiblingElement("tile")) {
-        AnimatedTile animatedTile;
-
-        // Check for animation
-        XMLElement* animationElement = tileElement->FirstChildElement("animation");
-        if (animationElement) {
-            // Loop through frame elements
-            for (XMLElement* frameElement = animationElement->FirstChildElement("frame"); frameElement; frameElement = frameElement->NextSiblingElement("frame")) {
-                int tileId = 0;
-                int duration = 0;
-
-                frameElement->QueryIntAttribute("tileid", &tileId);
-                frameElement->QueryIntAttribute("duration", &duration);
-
-                // Store frame details
-                animatedTile.frames.push_back(tileId); // Store the tile ID of the frame
-                animatedTile.frameDuration = duration; // Set frame duration
-            }
-
-            // Add the animated tile if frames were found
-            if (!animatedTile.frames.empty()) {
-                animatedTiles.push_back(animatedTile);
-            }
-        }
-    }
-
     return true; // Success
-}
-
-
-void updateAnimations(float deltaTime) {
-    for (auto& animatedTile : animatedTiles) {
-        animatedTile.elapsedTime += deltaTime;
-        if (animatedTile.elapsedTime >= animatedTile.frameDuration) {
-            animatedTile.elapsedTime -= animatedTile.frameDuration;
-            animatedTile.currentFrame = (animatedTile.currentFrame + 1) % animatedTile.frames.size();
-        }
-    }
 }
 
 void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector<int>>>& tileMaps, const Camera& camera, float scale) {
     for (size_t layer = 0; layer < tileMaps.size(); ++layer) {
+
         const auto& layerMap = tileMaps[layer];
 
         for (size_t y = 0; y < layerMap.size(); ++y) {
@@ -353,6 +311,7 @@ void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector
                 int localId = row[x];
 
                 if (localId > 0) {
+
                     const Tileset* tileset = nullptr;
                     for (const auto& ts : tilesets) {
                         if (localId >= ts.firstGid) {
@@ -369,55 +328,23 @@ void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector
                         int cols = imageWidth / tileWidth;
                         int rows = imageHeight / tileHeight;
 
-                        // Check for animated tile without std::find_if
-                        bool isAnimated = false;
-                        int animatedTileIndex = -1;
-                        for (long i = 0; i < animatedTiles.size(); ++i) {
-                            if (animatedTiles[i].tileId == localId) {
-                                isAnimated = true;
-                                animatedTileIndex = i; // Save index to retrieve later
-                                break;
-                            }
-                        }
 
-                        if (isAnimated) {
-                            // Get the animated tile data
-                            auto& animTile = animatedTiles[animatedTileIndex];
-                            int currentAnimatedId = animTile.frames[animTile.currentFrame];
-                            int animatedTileIndex = currentAnimatedId - tileset->firstGid;
+                        // Regular static tile rendering
+                        int tileIndex = localId - tileset->firstGid;
+                        int srcX = (tileIndex % cols) * tileWidth;
+                        int srcY = (tileIndex / cols) * tileHeight;
 
-                            int srcX = (animatedTileIndex % cols) * tileWidth;
-                            int srcY = (animatedTileIndex / cols) * tileHeight;
+                        int GID = localId - tileIndex;
+                        SDL_Rect srcRect = { srcX, srcY, tileWidth, tileHeight };
+                        SDL_Rect dstRect = {
+                        static_cast<int>(x * TILE_SIZE - camera.x),
+                        static_cast<int>(y * TILE_SIZE - camera.y),
+                        tileWidth,
+                        tileHeight
+                        };
 
-                            SDL_Rect srcRect = { srcX, srcY, tileWidth, tileHeight };
+                        SDL_RenderCopy(renderer, tileset->texture, &srcRect, &dstRect);
 
-                            SDL_Rect dstRect = {
-                                static_cast<int>(x * TILE_SIZE - camera.x),
-                                static_cast<int>(y * TILE_SIZE - camera.y),
-                                tileWidth,
-                                tileHeight
-                            };
-
-                            SDL_RenderCopy(renderer, tileset->texture, &srcRect, &dstRect);
-                        }
-                        else {
-                            // Regular static tile rendering
-                            int tileIndex = localId - tileset->firstGid;
-
-                            int srcX = (tileIndex % cols) * tileWidth;
-                            int srcY = (tileIndex / cols) * tileHeight;
-
-                            SDL_Rect srcRect = { srcX, srcY, tileWidth, tileHeight };
-
-                            SDL_Rect dstRect = {
-                                static_cast<int>(x * TILE_SIZE - camera.x),
-                                static_cast<int>(y * TILE_SIZE - camera.y),
-                                tileWidth,
-                                tileHeight
-                            };
-
-                            SDL_RenderCopy(renderer, tileset->texture, &srcRect, &dstRect);
-                        }
                     }
                 }
             }
