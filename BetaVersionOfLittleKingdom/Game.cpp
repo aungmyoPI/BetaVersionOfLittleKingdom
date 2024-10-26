@@ -4,8 +4,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <tinyxml2.h>
-#include <sstream>
-#include <set>
 #include "player.h"
 
 using namespace tinyxml2;
@@ -40,10 +38,6 @@ player::AnimationState state = player::IDLE; // Player animation state
 float timeSinceLastFrame = 0.0f; // Time tracker for animation
 Uint32 lastTime = SDL_GetTicks();
 
-void log(XMLElement* c) {
-    std::cout << c << std::endl;
-}
-
 std::vector<Tileset> tilesets;
 
 SDL_Window* window = nullptr;
@@ -62,7 +56,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-
     std::vector<std::vector<std::vector<int>>> tileMaps;
     int mapWidth = 0;
     int mapHeight = 0;
@@ -75,8 +68,8 @@ int main(int argc, char* argv[]) {
     Player.loadPlayerSpriteSheet(renderer, "D:/Assets/Tiny Swords/Tiny Swords (Update 010)/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png");
 
     Camera camera(SCREEN_WIDTH, SCREEN_HEIGHT);
-    camera.x = (mapWidth * TILE_SIZE - camera.width) / 2;
-    camera.y = (mapHeight * TILE_SIZE - camera.height) / 2;
+    camera.x = ((mapWidth * TILE_SIZE - camera.width) / 2 ) + 200;
+    camera.y = ((mapHeight * TILE_SIZE - camera.height) / 2) - 200;
 
     bool quit = false;
     SDL_Event e;
@@ -86,13 +79,18 @@ int main(int argc, char* argv[]) {
     float deltaTime = 0.0f;
 
     while (!quit) {
-        // Event handling
+        bool fullscreen = false;
+
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
 
             if (e.type == SDL_KEYDOWN) {
+                if (e.key.keysym.sym == SDLK_F11) {
+                        SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+                }
+
                 if (e.key.keysym.sym == SDLK_w) {
                     if (!collision) {
                         camera.y -= 12;
@@ -128,9 +126,9 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // Calculate deltaTime (time since the last frame)
+
         Uint32 currentTime = SDL_GetTicks();
-        deltaTime = (currentTime - lastTime) / 1000.0f; // Convert milliseconds to seconds
+        deltaTime = (currentTime - lastTime) / 1000.0f;
         lastTime = currentTime;
 
         // Update animations with deltaTime
@@ -155,7 +153,7 @@ int main(int argc, char* argv[]) {
         int windowHeight = 0;
         SDL_GetWindowSize(window, &windowWidth, &windowHeight);
         renderMap(renderer, tileMaps, camera, scale);
-        Player.renderPlayerAnimation(renderer, Player.playerSpriteSheetTexture, currentFrame, (state == player::IDLE) ? 0 : 1, windowWidth / 2 - TILE_SIZE, windowHeight / 2 - TILE_SIZE, flipRunning);
+        Player.renderPlayerAnimation(renderer, Player.playerSpriteSheetTexture,currentFrame, (state == player::IDLE) ? 0 : 1, windowWidth/2 - TILE_SIZE, windowHeight/2 - TILE_SIZE, flipRunning);
 
         // Present updated screen
         SDL_RenderPresent(renderer);
@@ -300,8 +298,9 @@ bool loadTSX(const std::string& filePath, Tileset& tileset) {
 }
 
 void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector<int>>>& tileMaps, const Camera& camera, float scale) {
+    
     for (size_t layer = 0; layer < tileMaps.size(); ++layer) {
-
+  
         const auto& layerMap = tileMaps[layer];
 
         for (size_t y = 0; y < layerMap.size(); ++y) {
@@ -311,7 +310,7 @@ void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector
                 int localId = row[x];
 
                 if (localId > 0) {
-
+                    
                     const Tileset* tileset = nullptr;
                     for (const auto& ts : tilesets) {
                         if (localId >= ts.firstGid) {
@@ -328,7 +327,7 @@ void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector
                         int cols = imageWidth / tileWidth;
                         int rows = imageHeight / tileHeight;
 
-
+                      
                         // Regular static tile rendering
                         int tileIndex = localId - tileset->firstGid;
                         int srcX = (tileIndex % cols) * tileWidth;
@@ -337,14 +336,14 @@ void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector
                         int GID = localId - tileIndex;
                         SDL_Rect srcRect = { srcX, srcY, tileWidth, tileHeight };
                         SDL_Rect dstRect = {
-                        static_cast<int>(x * TILE_SIZE - camera.x),
-                        static_cast<int>(y * TILE_SIZE - camera.y),
+                        static_cast<int>( x * TILE_SIZE - camera.x),
+                        static_cast<int>( y * TILE_SIZE - camera.y),
                         tileWidth,
                         tileHeight
                         };
 
-                        SDL_RenderCopy(renderer, tileset->texture, &srcRect, &dstRect);
-
+                    SDL_RenderCopy(renderer, tileset->texture, &srcRect, &dstRect);
+                        
                     }
                 }
             }
