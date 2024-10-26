@@ -90,6 +90,9 @@ int main(int argc, char* argv[]) {
                 if (e.key.keysym.sym == SDLK_F11) {
                         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
                 }
+                if (e.key.keysym.sym == SDLK_ESCAPE) {
+                    quit = true;
+                }
 
                 if (e.key.keysym.sym == SDLK_w) {
                     if (!collision) {
