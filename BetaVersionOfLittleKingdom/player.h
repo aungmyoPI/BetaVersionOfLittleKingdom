@@ -48,7 +48,7 @@ public:
         SDL_RenderCopyEx(renderer, playerSpriteSheetTexture, &srcRect, &destRect, 0, NULL, flipType);
     }
 
-
+   
     void updatePlayerAnimationFrame(AnimationState state, int& currentFrame, float& timeSinceLastFrame, float deltaTime) {
         timeSinceLastFrame += deltaTime;
 
