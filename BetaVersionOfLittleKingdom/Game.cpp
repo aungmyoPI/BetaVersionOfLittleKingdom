@@ -12,6 +12,7 @@ const int TILE_SIZE = 64;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const int playerSpeed = 25;
+int playerActionValue = 0;
 bool collision = false;
 
 struct Tileset {
@@ -120,9 +121,23 @@ int main(int argc, char* argv[]) {
                     state = player::RUNNING;
                     flipRunning = false;
                 }
+                if (e.key.keysym.sym == SDLK_i) {
+                    state = player::ATTACK_UP;
+                }
+                if (e.key.keysym.sym == SDLK_j) {
+                    state = player::ATTACK_LEFT;
+                    flipRunning = true;
+                }
+                if (e.key.keysym.sym == SDLK_k) {
+                    state = player::ATTACK_DOWN;
+                }
+                if (e.key.keysym.sym == SDLK_l) {
+                    state = player::ATTACK_RIGHT;
+                    flipRunning = false;
+                }
             }
             if (e.type == SDL_KEYUP) {
-                if (e.key.keysym.sym == SDLK_d || e.key.keysym.sym == SDLK_a || e.key.keysym.sym == SDLK_s || e.key.keysym.sym == SDLK_w) {
+                if (e.key.keysym.sym == SDLK_d || e.key.keysym.sym == SDLK_a || e.key.keysym.sym == SDLK_s || e.key.keysym.sym == SDLK_w || e.key.keysym.sym == SDLK_j || e.key.keysym.sym == SDLK_k || e.key.keysym.sym == SDLK_l || e.key.keysym.sym == SDLK_i) {
                     state = player::IDLE;
                     currentFrame = 0;
                 }
@@ -152,11 +167,33 @@ int main(int argc, char* argv[]) {
             SDL_GetWindowSize(window, &windowWidth, &windowHeight);
             scale = static_cast<float>(windowWidth) / (mapWidth * TILE_SIZE);
         }
+        
         int windowWidth = 0;
         int windowHeight = 0;
         SDL_GetWindowSize(window, &windowWidth, &windowHeight);
         renderMap(renderer, tileMaps, camera, scale);
-        Player.renderPlayerAnimation(renderer, Player.playerSpriteSheetTexture,currentFrame, (state == player::IDLE) ? 0 : 1, windowWidth/2 - TILE_SIZE, windowHeight/2 - TILE_SIZE, flipRunning);
+
+        if (state == player::IDLE) {
+            playerActionValue = 0;
+        }
+        else if (state == player::RUNNING) {
+            playerActionValue = 1;
+        }
+        else if (state == player::ATTACK_UP) {
+            playerActionValue = 7;
+        }
+        else if (state == player::ATTACK_LEFT) {
+            playerActionValue = 3;
+        }
+        else if (state == player::ATTACK_DOWN) {
+            playerActionValue = 5;
+        }
+        else if (state == player::ATTACK_RIGHT) {
+            playerActionValue = 3;
+        }
+
+
+        Player.renderPlayerAnimation(renderer, Player.playerSpriteSheetTexture,currentFrame, playerActionValue, windowWidth/2 - TILE_SIZE, windowHeight/2 - TILE_SIZE, flipRunning);
 
         // Present updated screen
         SDL_RenderPresent(renderer);
@@ -166,6 +203,7 @@ int main(int argc, char* argv[]) {
     // Clean up and close SDL
     destroy();
     return 0;
+    
 }
 
 int init(const int& screenWidth, const int& screenHeight) {
@@ -266,6 +304,7 @@ bool loadTMX(const std::string& filePath, std::vector<std::vector<std::vector<in
 
 bool loadTSX(const std::string& filePath, Tileset& tileset) {
     XMLDocument doc;
+    
     std::string actualPath = "D:/Assets/GameFiles/maps/" + filePath;
 
     if (doc.LoadFile(actualPath.c_str()) != XML_SUCCESS) {
@@ -288,7 +327,9 @@ bool loadTSX(const std::string& filePath, Tileset& tileset) {
         const char* imagePath = imageElement->Attribute("source");
         if (imagePath) {
             std::string actualImagePath = "D:/Assets/GameFiles/Images/" + std::string(imagePath);
+            
             tileset.texture = IMG_LoadTexture(renderer, actualImagePath.c_str());
+            
             if (!tileset.texture) {
                 return false;
             }
@@ -337,10 +378,13 @@ void renderMap(SDL_Renderer* renderer, const std::vector<std::vector<std::vector
                         int srcY = (tileIndex / cols) * tileHeight;
 
                         int GID = localId - tileIndex;
+                        
                         SDL_Rect srcRect = { srcX, srcY, tileWidth, tileHeight };
+                        
                         SDL_Rect dstRect = {
                         static_cast<int>( x * TILE_SIZE - camera.x),
                         static_cast<int>( y * TILE_SIZE - camera.y),
+                        
                         tileWidth,
                         tileHeight
                         };
