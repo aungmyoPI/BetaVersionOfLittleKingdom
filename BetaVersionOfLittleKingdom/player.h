@@ -18,7 +18,11 @@ public:
     SDL_Texture* playerSpriteSheetTexture;
     enum AnimationState {
         IDLE,
-        RUNNING
+        RUNNING,
+        ATTACK_RIGHT,
+        ATTACK_LEFT,
+        ATTACK_UP,
+        ATTACK_DOWN
     };
 
     SDL_Texture* loadPlayerSpriteSheet(SDL_Renderer* renderer, const std::string& imagePath) {
@@ -59,6 +63,18 @@ public:
                 currentFrame = (currentFrame + 1) % TOTAL_FRAMES_IDLE;
             }
             else if (state == RUNNING) {
+                currentFrame = (currentFrame + 1) % TOTAL_FRAMES_RUNNING;
+            }
+            else if (state == ATTACK_RIGHT) {
+                currentFrame = (currentFrame + 1) % TOTAL_FRAMES_RUNNING;
+            }
+            else if (state == ATTACK_LEFT) {
+                currentFrame = (currentFrame + 1) % TOTAL_FRAMES_RUNNING;
+            }
+            else if (state == ATTACK_DOWN) {
+                currentFrame = (currentFrame + 1) % TOTAL_FRAMES_RUNNING;
+            }
+            else if (state == ATTACK_UP) {
                 currentFrame = (currentFrame + 1) % TOTAL_FRAMES_RUNNING;
             }
         }
